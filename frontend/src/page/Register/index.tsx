@@ -45,7 +45,6 @@ export function Register() {
         password: data.password
       }
     )
-    console.log("🚀 ~ file: index.tsx:48 ~ submit ~ result:", result)
   })
   return (
     <div className={style.background}>

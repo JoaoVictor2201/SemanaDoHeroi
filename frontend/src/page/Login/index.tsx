@@ -5,9 +5,11 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button } from '../../components/Button'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { BsKey } from 'react-icons/bs' 
 import { AiOutlineMail } from 'react-icons/ai'
+import { api } from '../../server'
+import { useAuth } from '../../hooks/auth'
 
 interface IformValues {
   email: string,
@@ -15,6 +17,8 @@ interface IformValues {
 }
 
 export function Login() {
+  const {signIn} = useAuth();
+  const navigate = useNavigate();
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -29,8 +33,12 @@ export function Login() {
     handleSubmit, 
     formState: {errors}
   } = useForm<IformValues>({resolver: yupResolver(schema)})
-  const submit = handleSubmit((data) => {
-    console.log("🚀 ~ file: index.tsx:25 ~ submit ~ data:", data)
+  const submit = handleSubmit(async ({email, password}) => {
+    try {
+      signIn({ email, password })
+    } catch (error) {
+      console.log("🚀 ~ file: index.tsx:41 ~ submit ~ error:", error) 
+    }
   })
   return (
     <div className={style.background}>
