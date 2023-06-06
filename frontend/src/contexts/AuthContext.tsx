@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext } from "react";
 import { api } from "../server";
 import { isAxiosError } from "axios";
 import { toast } from 'react-toastify'
